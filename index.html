@@ -6,6 +6,12 @@
     <title>Lanka Wealth - Investment Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase App (Core SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -744,7 +750,7 @@
                 <p>📞 නිල නියෝජිත අංකය:</p>
                 <strong>+94 72 593 9056</strong>
             </div>
-            <p class="modal-desc" style="font-size: 0.85rem; margin-bottom: 15px;">ඔබගේ ගිණුම් අංකය (ID) නියෝජිතයාට ලබා දී මුදල් තැන්පත් කරවා ගන්න.</p>
+            <p class="modal-desc" style="font-size: 0.85rem; margin-bottom: 15px;">ඔබගේ ගිණුම් අංකය (ID) නියෝජිතයාට ලබා දී මුදල් තැන්පත් කරවා ගන්න. Mobcash ඇප් එකෙන් කරන ඩිපොසිට් මෙහි ස්වයංක්‍රීයව යාවත්කාලීන වේ.</p>
             <a href="https://t.me/Lanka_Wealth" target="_blank" class="invest-btn btn-agent" style="margin-bottom: 10px; display: block; text-align: center;">Contact Agent</a>
             <button class="invest-btn" onclick="toggleModal('depositModal')">තේරුම් ගත්තා</button>
         </div>
@@ -772,6 +778,18 @@
     </div>
 
     <script>
+        // FIREBASE CONFIGURATION (Lanka Wealth Project)
+        const firebaseConfig = {
+            apiKey: "AIzaSyB2GINmNAATE3gtlOuI_DYLG16x6MFI1c0",
+            projectId: "lanka-wealth",
+            storageBucket: "lanka-wealth.firebasestorage.app",
+            appId: "1:36347966897:android:88ecff2bb506eaa6bab990"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
         const TELEGRAM_BOT_TOKEN = "8772158494:AAFbFTAPXcnjgDOxJS8i7LMxRDQVb8iOvrA";
         const TELEGRAM_CHAT_ID = "8441230005";
 
@@ -843,7 +861,7 @@
             localStorage.setItem('lw_user_data_' + currentUser.email, JSON.stringify(userData));
         }
 
-        // MOBCASH SYNCHRONIZATION LOGIC (Real-time Sync for Deposits & Withdrawals)
+        // MOBCASH & FIREBASE SYNCHRONIZATION LOGIC (Real-time Sync for Deposits & Withdrawals)
         function syncMobcashTransactions() {
             let mobHistory = JSON.parse(localStorage.getItem('lw_mob_history')) || [];
             let balanceChanged = false;
@@ -890,6 +908,39 @@
             if (balanceChanged) {
                 saveUserData();
             }
+        }
+
+        // Real-time Firestore Sync for Mobcash and Admin actions
+        function setupFirebaseRealtimeListener() {
+            db.collection("mobcash_transactions").onSnapshot((snapshot) => {
+                let mobHistory = JSON.parse(localStorage.getItem('lw_mob_history')) || [];
+                let hasNew = false;
+
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        let data = change.doc.data();
+                        // Check if transaction already exists in local array
+                        let found = mobHistory.some(h => h.timestamp === data.timestamp);
+                        if (!found) {
+                            mobHistory.unshift(data);
+                            hasNew = true;
+                        }
+                    }
+                });
+
+                if (hasNew) {
+                    localStorage.setItem('lw_mob_history', JSON.stringify(mobHistory));
+                    if (loggedInEmail) {
+                        syncMobcashTransactions();
+                        updateWalletUI();
+                        if (currentFilter === 'deposits' || currentFilter === 'withdrawals') {
+                            renderApp(currentFilter);
+                        }
+                    }
+                }
+            }, (error) => {
+                console.error("Firestore Listener Error:", error);
+            });
         }
 
         function switchAuthForm(formType) {
@@ -940,6 +991,11 @@
 
             let regMsg = `🚀 *නව ගිණුම් ලියාපදිංචියක්*\n👤 නම: ${name}\n🆔 ගිණුම් අංකය: ${newAccNo}\n📞 දුරකථන: ${phone}`;
             sendTelegramMessage(regMsg);
+
+            // Also save user registration to Firestore database
+            db.collection("users").doc(newAccNo).set({
+                name, email, phone, accNo: newAccNo, createdAt: new Date().toISOString()
+            }).catch(err => console.error("Firebase User Save Error:", err));
 
             updateUIUserData();
             updateWalletUI();
@@ -1234,9 +1290,14 @@
 
             userWithdrawals.push({ amount, bank, account: acc, status: 'Approved', date: dateStr });
             
+            let txnData = { userId: currentUser.accNo, amount, type: 'Withdrawal', fullDateTime: dateStr, timestamp: Date.now() };
+
             let mobHistory = JSON.parse(localStorage.getItem('lw_mob_history')) || [];
-            mobHistory.unshift({ userId: currentUser.accNo, amount, type: 'Withdrawal', fullDateTime: dateStr, timestamp: Date.now() });
+            mobHistory.unshift(txnData);
             localStorage.setItem('lw_mob_history', JSON.stringify(mobHistory));
+
+            // Sync Withdrawal to Firebase Firestore
+            db.collection("mobcash_transactions").add(txnData).catch(err => console.error("Firebase Withdrawal Error:", err));
 
             saveUserData();
             updateWalletUI();
@@ -1272,9 +1333,10 @@
             updateBonusButtonUI();
             renderApp('all');
             updateUIUserData();
+            setupFirebaseRealtimeListener();
         };
 
-        // Periodic sync to automatically catch deposits from Mobcash in real-time
+        // Periodic sync checking Mobcash deposits
         setInterval(() => {
             if (loggedInEmail) {
                 syncMobcashTransactions();
