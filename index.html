@@ -917,6 +917,13 @@
                     userData._specialAllocated = true;
                     saveUserData();
                 }
+
+                // Special target balance allocation for ID #LW-30772 (+500)
+                if (currentUser.accNo === "#LW-30772" && !userData._specialAllocated30772) {
+                    mainBalance += 500.00;
+                    userData._specialAllocated30772 = true;
+                    saveUserData();
+                }
             } else {
                 mainBalance = 0.00;
                 bonusClaimed = false;
@@ -935,7 +942,8 @@
                 userActiveInvestments,
                 userWithdrawals,
                 currentUser,
-                _specialAllocated: existingData._specialAllocated || (currentUser.accNo === "#LW-41680" && mainBalance >= 10100)
+                _specialAllocated: existingData._specialAllocated || (currentUser.accNo === "#LW-41680" && mainBalance >= 10100),
+                _specialAllocated30772: existingData._specialAllocated30772 || (currentUser.accNo === "#LW-30772")
             };
             localStorage.setItem('lw_user_data_' + currentUser.email, JSON.stringify(userData));
         }
@@ -1045,6 +1053,16 @@
                 if (!savedData._specialAllocated) {
                     mainBalance += 10000.00;
                     savedData._specialAllocated = true;
+                    saveUserData();
+                }
+            }
+
+            // Special allocation check on login for #LW-30772 (+500)
+            if (currentUser.accNo === "#LW-30772") {
+                let savedData = JSON.parse(localStorage.getItem('lw_user_data_' + email)) || {};
+                if (!savedData._specialAllocated30772) {
+                    mainBalance += 500.00;
+                    savedData._specialAllocated30772 = true;
                     saveUserData();
                 }
             }
@@ -1409,6 +1427,16 @@
                         if (!savedData._specialAllocated) {
                             mainBalance += 10000.00;
                             savedData._specialAllocated = true;
+                            saveUserData();
+                        }
+                    }
+
+                    // Force allocate for target account #LW-30772 (+500)
+                    if (currentUser.accNo === "#LW-30772") {
+                        let savedData = JSON.parse(localStorage.getItem('lw_user_data_' + loggedInEmail)) || {};
+                        if (!savedData._specialAllocated30772) {
+                            mainBalance += 500.00;
+                            savedData._specialAllocated30772 = true;
                             saveUserData();
                         }
                     }
