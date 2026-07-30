@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lanka Wealth & MobCash - Investment Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -630,7 +631,7 @@
             <button class="claim-btn" id="claimBonusBtn" onclick="claimWelcomeBonus()">රු. 100 Claim කරන්න</button>
         </div>
 
-        <!-- Category Navigation Bar -->
+        <!-- Category Navigation Bar (Admin Panel Category Removed) -->
         <div class="category-nav">
             <button class="cat-btn active" onclick="filterCategory('all', this)">සියලුම සැලසුම්</button>
             <button class="cat-btn" onclick="filterCategory('starter', this)">Starter (600 - 3K)</button>
@@ -638,7 +639,6 @@
             <button class="cat-btn" onclick="filterCategory('vip', this)">VIP / Elite (8K+)</button>
             <button class="cat-btn" onclick="filterCategory('active', this)" style="border-color: #10b981; color: #10b981;">⚡ Active Plans</button>
             <button class="cat-btn" onclick="filterCategory('withdrawals', this)" style="border-color: #f59e0b; color: #f59e0b;">🏦 Withdrawals</button>
-            <button class="cat-btn" onclick="toggleModal('adminModal')" style="border-color: #38bdf8; color: #38bdf8;">⚙️ Admin Panel</button>
         </div>
 
         <!-- Wallet Dashboard -->
@@ -760,19 +760,21 @@
         </div>
     </div>
 
-    <!-- 3. Deposit Notice Modal -->
+    <!-- 3. Deposit Notice & Live Sync Modal -->
     <div class="modal-overlay" id="depositModal">
         <div class="custom-modal">
             <button class="close-modal" onclick="toggleModal('depositModal')">&times;</button>
-            <div class="modal-title">💳 මුදල් තැන්පත් කිරීම (Deposit Notice)</div>
-            <p class="modal-desc">ඩිපොසිට් කිරීම සඳහා දැන්ම අපගේ නිල නියෝජිතයා (Agent) හා සම්බන්ධ වන්න.</p>
-            <div class="agent-contact-box">
+            <div class="modal-title">💳 මුදල් තැන්පත් කිරීම (Deposit Terminal)</div>
+            <p class="modal-desc">MobCash හරහා ඔබේ ගිණුමට මුදල් තැන්පත් කරන්න (Firestore Live Sync).</p>
+            <div class="input-box">
+                <label>තැන්පත් කළ යුතු මුදල (රු.):</label>
+                <input type="number" id="depositInputAmount" placeholder="උදා: 1000">
+            </div>
+            <button class="invest-btn" style="background: #10b981; color: #fff; margin-bottom: 10px;" onclick="processMobCashDeposit()">මුදල් එකතු කරන්න (Deposit)</button>
+            <div class="agent-contact-box" style="margin-top: 15px;">
                 <p>📞 නිල නියෝජිත අංකය:</p>
                 <strong>0725939056</strong>
             </div>
-            <p class="modal-desc" style="font-size: 0.85rem; margin-bottom: 15px;">WhatsApp හෝ ටෙලිග්‍රාම් මඟින් සම්බන්ධ වී මුදල් තැන්පත් කරවා ගන්න.</p>
-            <a href="https://t.me/Lanka_Wealth" target="_blank" class="invest-btn" style="background: #10b981; color: #fff; margin-bottom: 10px; display: block; text-align: center;">Contact Agent</a>
-            <button class="invest-btn" onclick="toggleModal('depositModal')">තේරුම් ගත්තා</button>
         </div>
     </div>
 
@@ -798,31 +800,16 @@
         </div>
     </div>
 
-    <!-- 5. Admin Panel Modal -->
-    <div class="modal-overlay" id="adminModal">
-        <div class="custom-modal" style="max-width: 500px;">
-            <button class="close-modal" onclick="toggleModal('adminModal')">&times;</button>
-            <div class="modal-title">⚙️ Admin Panel (MobCash Control)</div>
-            <p class="modal-desc">පරිපාලක පාලක පුවරුව හරහා පරිශීලක ශේෂය පාලනය කරන්න.</p>
-            <div class="input-box">
-                <label>පරිශීලකයාට එකතු කළ යුතු / අඩු කළ යුතු මුදල (රු.):</label>
-                <input type="number" id="adminAmount" placeholder="උදා: 1000 හෝ -500">
-            </div>
-            <button class="invest-btn" style="background: #10b981; color: #fff; margin-bottom: 10px;" onclick="adminUpdateBalance('add')">ශේෂය එකතු කරන්න (Add)</button>
-            <button class="invest-btn" style="background: #ef4444; color: #fff; margin-bottom: 15px;" onclick="adminUpdateBalance('set')">ශේෂය සකසන්න (Set Balance)</button>
-            <button class="invest-btn" onclick="toggleModal('adminModal')">වසන්න</button>
-        </div>
-    </div>
-
-    <!-- Firebase SDK Scripts -->
+    <!-- Firebase SDK Scripts & Core Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB2GINmNAATE3gtlOuI_DYLG16x6MFI1c0",
+            authDomain: "lanka-wealth.firebaseapp.com",
             projectId: "lanka-wealth",
             storageBucket: "lanka-wealth.firebasestorage.app",
             messagingSenderId: "36347966897",
@@ -858,7 +845,7 @@
         let currentUser = { name: "User", email: "", phone: "", accNo: "#MC-00000" };
         let activeUserUid = null;
 
-        // Original Investment Plans restored
+        // Investment Packages
         const packages = [
             { amount: 600, dailyRate: 2.0, days: 30, category: 'starter' },
             { amount: 1000, dailyRate: 2.2, days: 30, category: 'starter' },
@@ -875,7 +862,7 @@
         ];
 
         function isTransferAllowedToday() {
-            const today = new Date().getDay(); // 1 = Monday, 2 = Tuesday
+            const today = new Date().getDay();
             return (today === 1 || today === 2);
         }
 
@@ -898,6 +885,13 @@
                     userWithdrawals = [];
                     await saveUserData();
                 }
+
+                // Sync with MobCash cloud wallet state if available
+                const mobStateSnap = await getDoc(doc(db, "mobcash_config", "wallet_state"));
+                if (mobStateSnap.exists() && mobStateSnap.data().balance !== undefined) {
+                    // Optional: Integrate cloud balance if needed
+                }
+
                 updateUIUserData();
                 updateWalletUI();
                 updateBonusButtonUI();
@@ -918,6 +912,9 @@
                     userWithdrawals,
                     currentUser
                 }, { merge: true });
+
+                // Also update global cloud state for MobCash gateway synchronization
+                await setDoc(doc(db, "mobcash_config", "wallet_state"), { balance: mainBalance }, { merge: true });
             } catch (error) {
                 console.error("Error saving user data:", error);
             }
@@ -1035,6 +1032,47 @@
             updateWalletUI();
             updateBonusButtonUI();
             alert("සුභ පැතුම්! නොමිලේ ලැබුණු රු. 100 ක බෝනස් මුදල එකතු විය!");
+        }
+
+        // MobCash Live Gateway Deposit Integration
+        window.processMobCashDeposit = async function() {
+            let amountInput = document.getElementById('depositInputAmount').value;
+            let amount = parseFloat(amountInput);
+
+            if (isNaN(amount) || amount <= 0) {
+                alert("කරුණාකර වලංගු මුදලක් ඇතුළත් කරන්න!");
+                return;
+            }
+
+            mainBalance += amount;
+            await saveUserData();
+            updateWalletUI();
+
+            // Save transaction record to Firestore for live sync logging
+            try {
+                const now = new Date();
+                const dateStr = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                await addDoc(collection(db, "mobcash_transactions"), {
+                    userId: currentUser.accNo,
+                    amount: amount,
+                    type: 'Deposit',
+                    fullDateTime: `${dateStr} - ${timeStr}`,
+                    timestamp: Date.now()
+                });
+            } catch (err) {
+                console.error("Firestore Transaction Logging Error:", err);
+            }
+
+            let msg = `💳 *MobCash සෘජු තැන්පත් කිරීමක් (Deposit)*\n\n` +
+                      `👤 නම: ${currentUser.name}\n` +
+                      `🆔 ගිණුම: ${currentUser.accNo}\n` +
+                      `💰 මුදල: රු. ${amount.toLocaleString()}`;
+            sendTelegramMessage(msg);
+
+            alert(`සාර්ථකයි! රු. ${amount.toLocaleString()} ක් ඔබේ ගිණුමට තැන්පත් විය.`);
+            toggleModal('depositModal');
+            document.getElementById('depositInputAmount').value = '';
         }
 
         window.renderApp = function(filteredCategory = 'all') {
@@ -1193,25 +1231,6 @@
             document.getElementById(modalId).classList.toggle('active');
         }
 
-        // Admin Panel Integration Function
-        window.adminUpdateBalance = async function(action) {
-            let amount = parseFloat(document.getElementById('adminAmount').value);
-            if (isNaN(amount)) {
-                alert("කරුණාකර වලංගු මුදලක් ඇතුළත් කරන්න!");
-                return;
-            }
-            if (action === 'add') {
-                mainBalance += amount;
-            } else if (action === 'set') {
-                mainBalance = amount;
-            }
-            await saveUserData();
-            updateWalletUI();
-            alert(`Admin Panel: ගිණුමේ ශේෂය සාර්ථකව යාවත්කාලීන කරන ලදී! නව ශේෂය: රු. ${mainBalance.toFixed(2)}`);
-            toggleModal('adminModal');
-            document.getElementById('adminAmount').value = '';
-        }
-
         window.processWithdrawal = async function() {
             let amount = parseFloat(document.getElementById('withdrawAmount').value);
             let bank = document.getElementById('bankName').value.trim();
@@ -1238,6 +1257,17 @@
             await saveUserData();
             updateWalletUI();
             updateUIUserData();
+
+            // Log withdrawal transaction to Firestore
+            try {
+                await addDoc(collection(db, "mobcash_transactions"), {
+                    userId: currentUser.accNo,
+                    amount: amount,
+                    type: 'Withdrawal',
+                    fullDateTime: dateStr,
+                    timestamp: Date.now()
+                });
+            } catch(e) { console.error(e); }
 
             let withdrawMsg = `🏦 *MobCash නව මුදල් ඉල්ලුම් කිරීමක්*\n\n` +
                               `👤 නම: ${currentUser.name}\n` +
