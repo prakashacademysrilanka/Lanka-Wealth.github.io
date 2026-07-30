@@ -338,6 +338,9 @@
             border-radius: 10px;
             cursor: pointer;
             transition: opacity 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
         .invest-btn:hover {
@@ -379,22 +382,14 @@
             color: #10b981;
         }
 
-        /* Withdrawal Info & Support Buttons */
-        .withdrawal-info-box {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            margin-bottom: 12px;
-            line-height: 1.5;
-            text-align: center;
-        }
-
+        /* Support Buttons */
         .support-btn-group {
             display: flex;
             gap: 10px;
             margin-top: 12px;
         }
 
-        .support-btn-group button {
+        .support-btn-group a, .support-btn-group button {
             flex: 1;
             padding: 10px;
             border-radius: 8px;
@@ -402,7 +397,10 @@
             font-size: 0.85rem;
             cursor: pointer;
             border: none;
+            text-decoration: none;
+            text-align: center;
             transition: opacity 0.2s;
+            display: inline-block;
         }
 
         .btn-agent {
@@ -415,7 +413,7 @@
             color: #090d16;
         }
 
-        .support-btn-group button:hover {
+        .support-btn-group a:hover, .support-btn-group button:hover {
             opacity: 0.9;
         }
 
@@ -806,7 +804,8 @@
                 <p>📞 නිල නියෝජිත අංකය:</p>
                 <strong>+94 72 593 9056</strong>
             </div>
-            <p class="modal-desc" style="font-size: 0.85rem;">WhatsApp හෝ ඇමතුමක් මඟින් සම්බන්ධ වී මුදල් තැන්පත් කරවා ගන්න.</p>
+            <p class="modal-desc" style="font-size: 0.85rem; margin-bottom: 15px;">WhatsApp හෝ ටෙලිග්‍රාම් මඟින් සම්බන්ධ වී මුදල් තැන්පත් කරවා ගන්න.</p>
+            <a href="https://t.me/Lanka_Wealth" target="_blank" class="invest-btn btn-agent" style="margin-bottom: 10px; display: block; text-align: center;">Contact Agent</a>
             <button class="invest-btn" onclick="toggleModal('depositModal')">තේරුම් ගත්තා</button>
         </div>
     </div>
@@ -1169,8 +1168,8 @@
                             <button class="invest-btn" style="background: #1e293b; color: #10b981; border: 1px solid #10b981; margin-bottom: 10px;" disabled>සාර්ථකයි (Successful) ✓</button>
                             
                             <div class="support-btn-group">
-                                <button class="btn-agent" onclick="contactAgent()">Contact Agent</button>
-                                <button class="btn-support" onclick="contactSupport()">Contact Support</button>
+                                <a href="https://t.me/Lanka_Wealth" target="_blank" class="btn-agent">Contact Agent</a>
+                                <a href="https://t.me/Lanka_Wealth" target="_blank" class="btn-support">Contact Admin</a>
                             </div>
                         </div>
                     `;
@@ -1398,15 +1397,6 @@
             }
         }
 
-        // Support Actions
-        function contactAgent() {
-            alert("නිල නියෝජිත අංකය (+94 72 593 9056) වෙත WhatsApp හෝ ඇමතුමක් මඟින් සම්බන්ධ වන්න.");
-        }
-
-        function contactSupport() {
-            alert("පාරිභෝගික සේවා අංකය (+94 77 123 4567) වෙත සම්බන්ධ වන්න.");
-        }
-
         // Initialize on load with Persistent Authentication & Separate Account IDs
         window.onload = () => {
             if (loggedInEmail) {
@@ -1449,7 +1439,7 @@
                 }
             } else {
                 mainBalance = 0.00;
-                bonusClaimed = false;
+                    bonusClaimed = false;
                 document.getElementById('authModal').classList.add('active');
             }
 
