@@ -622,6 +622,7 @@
             <button class="cat-btn" onclick="filterCategory('growth', this)">Growth (4K - 7K)</button>
             <button class="cat-btn" onclick="filterCategory('vip', this)">VIP / Elite (8K+)</button>
             <button class="cat-btn" onclick="filterCategory('active', this)" style="border-color: #10b981; color: #10b981;">⚡ Active Plans</button>
+            <button class="cat-btn" onclick="filterCategory('deposits', this)" style="border-color: #38bdf8; color: #38bdf8;">💳 Deposits</button>
             <button class="cat-btn" onclick="filterCategory('withdrawals', this)" style="border-color: #f59e0b; color: #f59e0b;">🏦 Withdrawals</button>
         </div>
 
@@ -790,6 +791,7 @@
         let bonusClaimed = false;
         let userActiveInvestments = [];
         let userWithdrawals = [];
+        let userDeposits = [];
         let currentFilter = 'all';
         let currentUserId = "#LW-00000";
 
@@ -818,30 +820,34 @@
         function loadUserData(email) {
             let userData = JSON.parse(localStorage.getItem('lw_user_data_' + email));
             if (userData) {
-                mainBalance = userData.mainBalance;
-                bonusClaimed = userData.bonusClaimed;
-                userActiveInvestments = userData.userActiveInvestments;
-                userWithdrawals = userData.userWithdrawals;
-                currentUser = userData.currentUser;
+                mainBalance = userData.mainBalance || 0.00;
+                bonusClaimed = userData.bonusClaimed || false;
+                userActiveInvestments = userData.userActiveInvestments || [];
+                userWithdrawals = userData.userWithdrawals || [];
+                userDeposits = userData.userDeposits || [];
+                currentUser = userData.currentUser || currentUser;
                 currentUserId = currentUser.accNo;
             } else {
                 mainBalance = 0.00;
                 bonusClaimed = false;
                 userActiveInvestments = [];
                 userWithdrawals = [];
+                userDeposits = [];
             }
             syncMobcashTransactions();
         }
 
         function saveUserData() {
             if (!currentUser.email) return;
-            let userData = { mainBalance, bonusClaimed, userActiveInvestments, userWithdrawals, currentUser };
+            let userData = { mainBalance, bonusClaimed, userActiveInvestments, userWithdrawals, userDeposits, currentUser };
             localStorage.setItem('lw_user_data_' + currentUser.email, JSON.stringify(userData));
         }
 
-        // MOBCASH SYNCHRONIZATION LOGIC
+        // MOBCASH SYNCHRONIZATION LOGIC (Real-time Sync for Deposits & Withdrawals)
         function syncMobcashTransactions() {
             let mobHistory = JSON.parse(localStorage.getItem('lw_mob_history')) || [];
+            let balanceChanged = false;
+
             mobHistory.forEach(item => {
                 let targetId = item.userId ? item.userId.trim().toUpperCase() : "";
                 let userAcc = currentUser.accNo ? currentUser.accNo.trim().toUpperCase() : "";
@@ -861,14 +867,29 @@
                         }
                     } else if (item.type === 'Deposit') {
                         let depKey = `mob_credited_${item.timestamp}`;
+                        let existsInLocal = userDeposits.some(d => d.date === item.fullDateTime && d.amount === item.amount);
+                        
+                        if (!existsInLocal) {
+                            userDeposits.push({
+                                amount: item.amount,
+                                method: 'Mobcash Agent Top-up',
+                                status: 'Success ✓',
+                                date: item.fullDateTime
+                            });
+                        }
+
                         if (!localStorage.getItem(depKey)) {
                             mainBalance += item.amount;
                             localStorage.setItem(depKey, 'true');
+                            balanceChanged = true;
                         }
                     }
                 }
             });
-            saveUserData();
+
+            if (balanceChanged) {
+                saveUserData();
+            }
         }
 
         function switchAuthForm(formType) {
@@ -911,6 +932,7 @@
             bonusClaimed = false;
             userActiveInvestments = [];
             userWithdrawals = [];
+            userDeposits = [];
             saveUserData();
 
             localStorage.setItem('lw_loggedInEmail', email);
@@ -976,6 +998,7 @@
         }
 
         function updateWalletUI() {
+            syncMobcashTransactions();
             document.getElementById('walletBalance').innerText = `රු. ${mainBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
         }
 
@@ -1004,6 +1027,7 @@
         }
 
         function renderApp(filteredCategory = 'all') {
+            syncMobcashTransactions();
             currentFilter = filteredCategory;
             const grid = document.getElementById('plansGrid');
             const select = document.getElementById('calcPackage');
@@ -1017,6 +1041,30 @@
                 packages.forEach(pkg => {
                     select.innerHTML += `<option value="${pkg.amount}">රු. ${pkg.amount.toLocaleString()} (${pkg.dailyRate}% දිනකට)</option>`;
                 });
+            }
+
+            if (filteredCategory === 'deposits') {
+                heading.innerText = "💳 ඔබගේ තැන්පත් කිරීම් ඉතිහාසය (Deposit History)";
+                if (userDeposits.length === 0) {
+                    grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: #94a3b8; padding: 40px;">තවම තැන්පත් කිරීම් සිදු කර නොමැත. Mobcash ඇප් එක හරහා කරන Top-ups මෙහි ස්වයංක්‍රීයව පෙන්වනු ඇත.</div>`;
+                    return;
+                }
+
+                userDeposits.forEach(dep => {
+                    grid.innerHTML += `
+                        <div class="plan-card active-plan-card" style="border-color: #38bdf8;">
+                            <span class="status-badge status-approved" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">Deposit Successful ✓</span>
+                            <div class="plan-price" style="color: #38bdf8;">රු. ${dep.amount.toLocaleString()}</div>
+                            <ul class="plan-features-list">
+                                <div>ක්‍රමය: <span>${dep.method}</span></div>
+                                <div>තත්ත්වය: <span style="color: #10b981;">සාර්ථකයි</span></div>
+                                <div>දිනය / වෙලාව: <span>${dep.date}</span></div>
+                            </ul>
+                            <button class="invest-btn" style="background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8;" disabled>ගිණුමට එකතු විය ✓</button>
+                        </div>
+                    `;
+                });
+                return;
             }
 
             if (filteredCategory === 'withdrawals') {
@@ -1127,7 +1175,7 @@
         function startInvestment(amount) {
             let pkg = packages.find(p => p.amount === amount);
             if (mainBalance < amount) {
-                alert("ඔබගේ ප්‍රධාන ගිණුම් ශේෂය ප්‍රමාණවත් නොවේ!");
+                alert("ඔබගේ ප්‍රධාන ගිණුම් ශේෂය ප්‍රමාණවත් නොවේ! කරුණාකර Mobcash ඇප් එක හරහා ඩිපොසිට් කර මුදල් ලබාගන්න.");
                 return;
             }
 
@@ -1225,6 +1273,17 @@
             renderApp('all');
             updateUIUserData();
         };
+
+        // Periodic sync to automatically catch deposits from Mobcash in real-time
+        setInterval(() => {
+            if (loggedInEmail) {
+                syncMobcashTransactions();
+                updateWalletUI();
+                if (currentFilter === 'deposits' || currentFilter === 'withdrawals') {
+                    renderApp(currentFilter);
+                }
+            }
+        }, 3000);
     </script>
 </body>
 </html>
