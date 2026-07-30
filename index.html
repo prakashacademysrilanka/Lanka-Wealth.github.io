@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lanka Wealth - Investment Platform</title>
+    <title>Lanka Wealth & MobCash - Investment Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -382,41 +382,6 @@
             color: #10b981;
         }
 
-        /* Support Buttons */
-        .support-btn-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .support-btn-group a, .support-btn-group button {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            border: none;
-            text-decoration: none;
-            text-align: center;
-            transition: opacity 0.2s;
-            display: inline-block;
-        }
-
-        .btn-agent {
-            background: #10b981;
-            color: #fff;
-        }
-
-        .btn-support {
-            background: #38bdf8;
-            color: #090d16;
-        }
-
-        .support-btn-group a:hover, .support-btn-group button:hover {
-            opacity: 0.9;
-        }
-
         /* Calculator Section */
         .calculator-container {
             background: #111827;
@@ -642,7 +607,7 @@
         <!-- Top Bar with Profile -->
         <div class="top-bar">
             <div class="brand-logo">
-                <h2>Lanka Wealth</h2>
+                <h2>MobCash & Lanka Wealth</h2>
             </div>
             <button class="profile-btn" onclick="toggleModal('profileModal')">
                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" alt="Profile">
@@ -652,7 +617,7 @@
 
         <!-- Header -->
         <header>
-            <h1>ආයෝජන කළමනාකරණ පද්ධතිය</h1>
+            <h1>ආයෝජන සහ MobCash කළමනාකරණ පද්ධතිය</h1>
             <p>ඔබට අවශ්‍ය නිශ්චිත ආයෝජන සැලසුම පහසුවෙන් තෝරාගන්න</p>
         </header>
 
@@ -673,12 +638,13 @@
             <button class="cat-btn" onclick="filterCategory('vip', this)">VIP / Elite (8K+)</button>
             <button class="cat-btn" onclick="filterCategory('active', this)" style="border-color: #10b981; color: #10b981;">⚡ Active Plans</button>
             <button class="cat-btn" onclick="filterCategory('withdrawals', this)" style="border-color: #f59e0b; color: #f59e0b;">🏦 Withdrawals</button>
+            <button class="cat-btn" onclick="toggleModal('adminModal')" style="border-color: #38bdf8; color: #38bdf8;">⚙️ Admin Panel</button>
         </div>
 
         <!-- Wallet Dashboard -->
         <div class="wallet-card">
             <div class="wallet-info">
-                <h3>මුළු ගිණුම් ශේෂය (Main Balance)</h3>
+                <h3>මුළු ගිණුම් ශේෂය (Main Balance / MobCash)</h3>
                 <div class="balance" id="walletBalance">රු. 0.00</div>
             </div>
             <div class="wallet-actions">
@@ -738,7 +704,7 @@
 
         <div class="custom-modal" id="registerFormContainer" style="display: none;">
             <div class="modal-title">📝 නව ගිණුම් ලියාපදිංචිය (Register)</div>
-            <p class="modal-desc">Lanka Wealth සමඟ සම්බන්ධ වීමට ඔබේ තොරතුරු පුරවන්න.</p>
+            <p class="modal-desc">MobCash සමඟ සම්බන්ධ වීමට ඔබේ තොරතුරු පුරවන්න.</p>
             <div class="input-box">
                 <label>සම්පූර්ණ නම (Full Name):</label>
                 <input type="text" id="regName" placeholder="උදා: Prakash Lakshan">
@@ -749,7 +715,7 @@
             </div>
             <div class="input-box">
                 <label>දුරකථන අංකය (Phone Number):</label>
-                <input type="text" id="regPhone" placeholder="+94 77 123 4567">
+                <input type="text" id="regPhone" placeholder="0725939056">
             </div>
             <div class="input-box">
                 <label>මුරපදය (Password):</label>
@@ -774,7 +740,7 @@
             <div class="profile-details-list">
                 <div class="profile-row">
                     <span>ගිණුම් අංකය (ID):</span>
-                    <strong id="profileAccNo">#LW-00000</strong>
+                    <strong id="profileAccNo">#MC-00000</strong>
                 </div>
                 <div class="profile-row">
                     <span>විද්‍යුත් තැපෑල:</span>
@@ -802,10 +768,10 @@
             <p class="modal-desc">ඩිපොසිට් කිරීම සඳහා දැන්ම අපගේ නිල නියෝජිතයා (Agent) හා සම්බන්ධ වන්න.</p>
             <div class="agent-contact-box">
                 <p>📞 නිල නියෝජිත අංකය:</p>
-                <strong>+94 72 593 9056</strong>
+                <strong>0725939056</strong>
             </div>
             <p class="modal-desc" style="font-size: 0.85rem; margin-bottom: 15px;">WhatsApp හෝ ටෙලිග්‍රාම් මඟින් සම්බන්ධ වී මුදල් තැන්පත් කරවා ගන්න.</p>
-            <a href="https://t.me/Lanka_Wealth" target="_blank" class="invest-btn btn-agent" style="margin-bottom: 10px; display: block; text-align: center;">Contact Agent</a>
+            <a href="https://t.me/Lanka_Wealth" target="_blank" class="invest-btn" style="background: #10b981; color: #fff; margin-bottom: 10px; display: block; text-align: center;">Contact Agent</a>
             <button class="invest-btn" onclick="toggleModal('depositModal')">තේරුම් ගත්තා</button>
         </div>
     </div>
@@ -832,13 +798,29 @@
         </div>
     </div>
 
+    <!-- 5. Admin Panel Modal -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="custom-modal" style="max-width: 500px;">
+            <button class="close-modal" onclick="toggleModal('adminModal')">&times;</button>
+            <div class="modal-title">⚙️ Admin Panel (MobCash Control)</div>
+            <p class="modal-desc">පරිපාලක පාලක පුවරුව හරහා පරිශීලක ශේෂය පාලනය කරන්න.</p>
+            <div class="input-box">
+                <label>පරිශීලකයාට එකතු කළ යුතු / අඩු කළ යුතු මුදල (රු.):</label>
+                <input type="number" id="adminAmount" placeholder="උදා: 1000 හෝ -500">
+            </div>
+            <button class="invest-btn" style="background: #10b981; color: #fff; margin-bottom: 10px;" onclick="adminUpdateBalance('add')">ශේෂය එකතු කරන්න (Add)</button>
+            <button class="invest-btn" style="background: #ef4444; color: #fff; margin-bottom: 15px;" onclick="adminUpdateBalance('set')">ශේෂය සකසන්න (Set Balance)</button>
+            <button class="invest-btn" onclick="toggleModal('adminModal')">වසන්න</button>
+        </div>
+    </div>
+
     <!-- Firebase SDK Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Firebase Configuration (from your google-services.json)
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB2GINmNAATE3gtlOuI_DYLG16x6MFI1c0",
             projectId: "lanka-wealth",
@@ -847,7 +829,6 @@
             appId: "1:36347966897:android:88ecff2bb506eaa6bab990"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -874,9 +855,10 @@
         let userActiveInvestments = [];
         let userWithdrawals = [];
         let currentFilter = 'all';
-        let currentUser = { name: "User", email: "", phone: "", accNo: "#LW-00000" };
+        let currentUser = { name: "User", email: "", phone: "", accNo: "#MC-00000" };
         let activeUserUid = null;
 
+        // Original Investment Plans restored
         const packages = [
             { amount: 600, dailyRate: 2.0, days: 30, category: 'starter' },
             { amount: 1000, dailyRate: 2.2, days: 30, category: 'starter' },
@@ -897,7 +879,6 @@
             return (today === 1 || today === 2);
         }
 
-        // Load User Data from Firestore Database
         async function loadUserData(uid) {
             try {
                 const docRef = doc(db, "users", uid);
@@ -910,8 +891,7 @@
                     userWithdrawals = data.userWithdrawals || [];
                     currentUser = data.currentUser || currentUser;
                 } else {
-                    // Create default document if not exists
-                    currentUser = { name: auth.currentUser.displayName || "User", email: auth.currentUser.email, phone: "-", accNo: "#LW-" + Math.floor(10000 + Math.random() * 90000) };
+                    currentUser = { name: auth.currentUser.displayName || "User", email: auth.currentUser.email, phone: "0725939056", accNo: "#MC-" + Math.floor(10000 + Math.random() * 90000) };
                     mainBalance = 0;
                     bonusClaimed = false;
                     userActiveInvestments = [];
@@ -927,7 +907,6 @@
             }
         }
 
-        // Save User Data to Firestore Database
         async function saveUserData() {
             if (!activeUserUid) return;
             try {
@@ -954,7 +933,6 @@
             }
         }
 
-        // Handle Firebase Registration
         window.handleRegister = async function() {
             let name = document.getElementById('regName').value.trim();
             let email = document.getElementById('regEmail').value.trim();
@@ -971,7 +949,7 @@
                 const user = userCredential.user;
                 activeUserUid = user.uid;
 
-                let newAccNo = "#LW-" + Math.floor(10000 + Math.random() * 90000);
+                let newAccNo = "#MC-" + Math.floor(10000 + Math.random() * 90000);
                 currentUser = { name, email, phone, accNo: newAccNo };
                 mainBalance = 0.00;
                 bonusClaimed = false;
@@ -980,7 +958,7 @@
 
                 await saveUserData();
 
-                let regMsg = `🚀 *නව ගිණුම් ලියාපදිංචියක් (New Registration)*\n\n` +
+                let regMsg = `🚀 *MobCash නව ගිණුම් ලියාපදිංචියක්*\n\n` +
                              `👤 නම: ${name}\n` +
                              `🆔 ගිණුම් අංකය: ${newAccNo}\n` +
                              `📧 විද්‍යුත් තැපෑල: ${email}\n` +
@@ -988,13 +966,12 @@
                 sendTelegramMessage(regMsg);
 
                 document.getElementById('authModal').classList.remove('active');
-                alert("සුභ පැතුම්! ගිණුම සාර්ථකව සාදන ලදී.");
+                alert("සුභ පැතුම්! MobCash ගිණුම සාර්ථකව සාදන ලදී.");
             } catch (error) {
                 alert("ලියාපදිංචි වීමේ දෝෂයක්: " + error.message);
             }
         }
 
-        // Handle Firebase Login
         window.handleLogin = async function() {
             let email = document.getElementById('loginEmail').value.trim();
             let pass = document.getElementById('loginPassword').value.trim();
@@ -1010,13 +987,12 @@
                 await loadUserData(activeUserUid);
 
                 document.getElementById('authModal').classList.remove('active');
-                alert("සාර්ථකව ගිණුමට පිවිසෙන ලදී!");
+                alert("සාර්ථකව MobCash ගිණුමට පිවිසෙන ලදී!");
             } catch (error) {
                 alert("පිවිසීමේ දෝෂයක්: " + error.message);
             }
         }
 
-        // Handle Logout
         window.handleLogout = async function() {
             await signOut(auth);
             toggleModal('profileModal');
@@ -1217,6 +1193,25 @@
             document.getElementById(modalId).classList.toggle('active');
         }
 
+        // Admin Panel Integration Function
+        window.adminUpdateBalance = async function(action) {
+            let amount = parseFloat(document.getElementById('adminAmount').value);
+            if (isNaN(amount)) {
+                alert("කරුණාකර වලංගු මුදලක් ඇතුළත් කරන්න!");
+                return;
+            }
+            if (action === 'add') {
+                mainBalance += amount;
+            } else if (action === 'set') {
+                mainBalance = amount;
+            }
+            await saveUserData();
+            updateWalletUI();
+            alert(`Admin Panel: ගිණුමේ ශේෂය සාර්ථකව යාවත්කාලීන කරන ලදී! නව ශේෂය: රු. ${mainBalance.toFixed(2)}`);
+            toggleModal('adminModal');
+            document.getElementById('adminAmount').value = '';
+        }
+
         window.processWithdrawal = async function() {
             let amount = parseFloat(document.getElementById('withdrawAmount').value);
             let bank = document.getElementById('bankName').value.trim();
@@ -1244,7 +1239,7 @@
             updateWalletUI();
             updateUIUserData();
 
-            let withdrawMsg = `🏦 *නව මුදල් ඉල්ලුම් කිරීමක් (New Withdrawal)*\n\n` +
+            let withdrawMsg = `🏦 *MobCash නව මුදල් ඉල්ලුම් කිරීමක්*\n\n` +
                               `👤 නම: ${currentUser.name}\n` +
                               `🆔 ගිණුම: ${currentUser.accNo}\n` +
                               `💰 මුදල: රු. ${amount.toLocaleString()}\n` +
@@ -1260,7 +1255,6 @@
             if (currentFilter === 'withdrawals') renderApp('withdrawals');
         }
 
-        // Firebase Auth State Listener
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 activeUserUid = user.uid;
