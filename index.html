@@ -28,7 +28,6 @@
             margin: 0 auto;
         }
 
-        /* Top Bar with Profile */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -69,7 +68,6 @@
             object-fit: cover;
         }
 
-        /* Header Style */
         header {
             text-align: center;
             margin-bottom: 30px;
@@ -87,7 +85,6 @@
             font-size: 1rem;
         }
 
-        /* Free Bonus Claim Banner */
         .bonus-banner {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(56, 189, 248, 0.2));
             border: 1px dashed #10b981;
@@ -136,7 +133,6 @@
             transform: none;
         }
 
-        /* Category Navigation Bar */
         .category-nav {
             display: flex;
             justify-content: center;
@@ -163,7 +159,6 @@
             box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
         }
 
-        /* Dashboard Wallet Card */
         .wallet-card {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -225,7 +220,6 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Active Plans & Withdrawals Top Control Panel */
         .active-control-panel {
             background: #111827;
             border: 1px solid rgba(16, 185, 129, 0.3);
@@ -272,7 +266,6 @@
             cursor: not-allowed;
         }
 
-        /* Section Titles */
         .section-title {
             font-size: 1.5rem;
             font-weight: 600;
@@ -280,7 +273,6 @@
             color: #f8fafc;
         }
 
-        /* Investment Plans Grid */
         .plans-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -348,7 +340,6 @@
             opacity: 0.9;
         }
 
-        /* Active Plan Card special styling */
         .active-plan-card {
             background: linear-gradient(135deg, #111827 0%, #1a2e3b 100%);
             border: 1px solid rgba(16, 185, 129, 0.3);
@@ -365,7 +356,6 @@
             margin-bottom: 10px;
         }
 
-        /* Status Badges */
         .status-badge {
             display: inline-block;
             padding: 4px 12px;
@@ -383,42 +373,6 @@
             color: #10b981;
         }
 
-        /* Support Buttons */
-        .support-btn-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .support-btn-group a, .support-btn-group button {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            border: none;
-            text-decoration: none;
-            text-align: center;
-            transition: opacity 0.2s;
-            display: inline-block;
-        }
-
-        .btn-agent {
-            background: #10b981;
-            color: #fff;
-        }
-
-        .btn-support {
-            background: #38bdf8;
-            color: #090d16;
-        }
-
-        .support-btn-group a:hover, .support-btn-group button:hover {
-            opacity: 0.9;
-        }
-
-        /* Calculator Section */
         .calculator-container {
             background: #111827;
             border-radius: 20px;
@@ -488,7 +442,6 @@
             font-size: 0.85rem;
         }
 
-        /* Modals */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -640,7 +593,6 @@
 <body>
 
     <div class="container">
-        <!-- Top Bar with Profile -->
         <div class="top-bar">
             <div class="brand-logo">
                 <h2>Lanka Wealth</h2>
@@ -651,13 +603,11 @@
             </button>
         </div>
 
-        <!-- Header -->
         <header>
             <h1>ආයෝජන කළමනාකරණ පද්ධතිය</h1>
             <p>ඔබට අවශ්‍ය නිශ්චිත ආයෝජන සැලසුම පහසුවෙන් තෝරාගන්න</p>
         </header>
 
-        <!-- Free Bonus Claim Banner -->
         <div class="bonus-banner">
             <div class="bonus-banner-text">
                 <h3>🎁 පිළිගැනීමේ ත්‍යාගය (Welcome Bonus)</h3>
@@ -666,7 +616,6 @@
             <button class="claim-btn" id="claimBonusBtn" onclick="claimWelcomeBonus()">රු. 100 Claim කරන්න</button>
         </div>
 
-        <!-- Category Navigation Bar -->
         <div class="category-nav">
             <button class="cat-btn active" onclick="filterCategory('all', this)">සියලුම සැලසුම්</button>
             <button class="cat-btn" onclick="filterCategory('starter', this)">Starter (600 - 3K)</button>
@@ -676,7 +625,6 @@
             <button class="cat-btn" onclick="filterCategory('withdrawals', this)" style="border-color: #f59e0b; color: #f59e0b;">🏦 Withdrawals</button>
         </div>
 
-        <!-- Wallet Dashboard -->
         <div class="wallet-card">
             <div class="wallet-info">
                 <h3>මුළු ගිණුම් ශේෂය (Main Balance)</h3>
@@ -688,25 +636,18 @@
             </div>
         </div>
 
-        <!-- Dynamic Top Container for Active Plans / Withdrawals View -->
         <div id="activeTopContainer"></div>
 
-        <!-- Investment Plans & Active Plans Section -->
         <h2 class="section-title" id="sectionHeading">✨ ආයෝජන සැලසුම් (Investment Plans)</h2>
-        <div class="plans-grid" id="plansGrid">
-            <!-- Plans generated by JavaScript -->
-        </div>
+        <div class="plans-grid" id="plansGrid"></div>
 
-        <!-- Profit Calculator -->
         <h2 class="section-title">📊 ලාභ ගණක යන්ත්‍රය (Profit Calculator)</h2>
         <div class="calculator-container">
             <div class="calc-grid">
                 <div>
                     <div class="input-box">
                         <label>ආයෝජන පැකේජය තෝරන්න:</label>
-                        <select id="calcPackage" onchange="calculateReturns()">
-                            <!-- Options generated dynamically -->
-                        </select>
+                        <select id="calcPackage" onchange="calculateReturns()"></select>
                     </div>
                 </div>
                 <div class="calc-result-box">
@@ -718,7 +659,6 @@
         </div>
     </div>
 
-    <!-- 1. Authentication Modal (Login / Register) -->
     <div class="modal-overlay active" id="authModal">
         <div class="custom-modal" id="loginFormContainer">
             <div class="modal-title">🔐 ගිණුමට පිවිසෙන්න (Login)</div>
@@ -763,7 +703,6 @@
         </div>
     </div>
 
-    <!-- 2. Profile System Modal -->
     <div class="modal-overlay" id="profileModal">
         <div class="custom-modal">
             <button class="close-modal" onclick="toggleModal('profileModal')">&times;</button>
@@ -795,7 +734,6 @@
         </div>
     </div>
 
-    <!-- 3. Deposit Notice Modal -->
     <div class="modal-overlay" id="depositModal">
         <div class="custom-modal">
             <button class="close-modal" onclick="toggleModal('depositModal')">&times;</button>
@@ -811,7 +749,6 @@
         </div>
     </div>
 
-    <!-- 4. Withdrawal System Modal -->
     <div class="modal-overlay" id="withdrawModal">
         <div class="custom-modal">
             <button class="close-modal" onclick="toggleModal('withdrawModal')">&times;</button>
@@ -833,24 +770,7 @@
         </div>
     </div>
 
-    <!-- Firebase App & SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyB2GINmNAATE3gtlOuI_DYLG16x6MFI1c0",
-            projectId: "lanka-wealth",
-            storageBucket: "lanka-wealth.firebasestorage.app",
-            appId: "1:36347966897:android:88ecff2bb506eaa6bab990"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-    </script>
-
     <script>
-        // Telegram Bot Configuration
         const TELEGRAM_BOT_TOKEN = "8772158494:AAFbFTAPXcnjgDOxJS8i7LMxRDQVb8iOvrA";
         const TELEGRAM_CHAT_ID = "8441230005";
 
@@ -859,15 +779,10 @@
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: TELEGRAM_CHAT_ID,
-                    text: text,
-                    parse_mode: 'Markdown'
-                })
+                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text, parse_mode: 'Markdown' })
             }).catch(error => console.error('Telegram Error:', error));
         }
 
-        // App State Variables
         let registeredUsers = JSON.parse(localStorage.getItem('lw_registeredUsers')) || [];
         let loggedInEmail = localStorage.getItem('lw_loggedInEmail') || null;
 
@@ -915,29 +830,24 @@
                 userActiveInvestments = [];
                 userWithdrawals = [];
             }
-            // Sync with Mobcash app transactions if any deposit/withdrawal was made via Mobcash ID
             syncMobcashTransactions();
         }
 
         function saveUserData() {
             if (!currentUser.email) return;
-            let userData = {
-                mainBalance,
-                bonusClaimed,
-                userActiveInvestments,
-                userWithdrawals,
-                currentUser
-            };
+            let userData = { mainBalance, bonusClaimed, userActiveInvestments, userWithdrawals, currentUser };
             localStorage.setItem('lw_user_data_' + currentUser.email, JSON.stringify(userData));
         }
 
-        // Sync Mobcash History with current user ID
+        // MOBCASH SYNCHRONIZATION LOGIC
         function syncMobcashTransactions() {
-            let mobHistory = JSON.parse(localStorage.getItem('mob_history')) || [];
+            let mobHistory = JSON.parse(localStorage.getItem('lw_mob_history')) || [];
             mobHistory.forEach(item => {
-                // If the transaction matches current user's ID or Email/Name reference
-                if (item.userId && item.userId.toUpperCase() === currentUser.accNo.toUpperCase()) {
-                    // Check if already added to userWithdrawals or balance adjusted
+                let targetId = item.userId ? item.userId.trim().toUpperCase() : "";
+                let userAcc = currentUser.accNo ? currentUser.accNo.trim().toUpperCase() : "";
+                let userMail = currentUser.email ? currentUser.email.trim().toLowerCase() : "";
+
+                if (targetId === userAcc || (userMail && targetId.includes(userMail))) {
                     if (item.type === 'Withdrawal') {
                         let exists = userWithdrawals.some(w => w.date === item.fullDateTime && w.amount === item.amount);
                         if (!exists) {
@@ -950,7 +860,6 @@
                             });
                         }
                     } else if (item.type === 'Deposit') {
-                        // Check if deposit balance was credited
                         let depKey = `mob_credited_${item.timestamp}`;
                         if (!localStorage.getItem(depKey)) {
                             mainBalance += item.amount;
@@ -1277,10 +1186,9 @@
 
             userWithdrawals.push({ amount, bank, account: acc, status: 'Approved', date: dateStr });
             
-            // Also push to Mobcash global history so Mobcash app syncs it if needed
-            let mobHistory = JSON.parse(localStorage.getItem('mob_history')) || [];
+            let mobHistory = JSON.parse(localStorage.getItem('lw_mob_history')) || [];
             mobHistory.unshift({ userId: currentUser.accNo, amount, type: 'Withdrawal', fullDateTime: dateStr, timestamp: Date.now() });
-            localStorage.setItem('mob_history', JSON.stringify(mobHistory));
+            localStorage.setItem('lw_mob_history', JSON.stringify(mobHistory));
 
             saveUserData();
             updateWalletUI();
