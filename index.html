@@ -919,7 +919,6 @@
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === "added") {
                         let data = change.doc.data();
-                        // Check if transaction already exists in local array
                         let found = mobHistory.some(h => h.timestamp === data.timestamp);
                         if (!found) {
                             mobHistory.unshift(data);
@@ -992,7 +991,6 @@
             let regMsg = `🚀 *නව ගිණුම් ලියාපදිංචියක්*\n👤 නම: ${name}\n🆔 ගිණුම් අංකය: ${newAccNo}\n📞 දුරකථන: ${phone}`;
             sendTelegramMessage(regMsg);
 
-            // Also save user registration to Firestore database
             db.collection("users").doc(newAccNo).set({
                 name, email, phone, accNo: newAccNo, createdAt: new Date().toISOString()
             }).catch(err => console.error("Firebase User Save Error:", err));
@@ -1296,7 +1294,6 @@
             mobHistory.unshift(txnData);
             localStorage.setItem('lw_mob_history', JSON.stringify(mobHistory));
 
-            // Sync Withdrawal to Firebase Firestore
             db.collection("mobcash_transactions").add(txnData).catch(err => console.error("Firebase Withdrawal Error:", err));
 
             saveUserData();
@@ -1336,7 +1333,6 @@
             setupFirebaseRealtimeListener();
         };
 
-        // Periodic sync checking Mobcash deposits
         setInterval(() => {
             if (loggedInEmail) {
                 syncMobcashTransactions();
